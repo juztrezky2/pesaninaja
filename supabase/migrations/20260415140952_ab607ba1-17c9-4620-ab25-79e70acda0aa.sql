@@ -1,0 +1,1 @@
+ALTER TABLE public.products ADD COLUMN vendor_whatsapp text DEFAULT '' NOT NULL;

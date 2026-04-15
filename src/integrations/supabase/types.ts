@@ -26,6 +26,7 @@ export type Database = {
           price: number
           updated_at: string
           vendor: string
+          vendor_whatsapp: string
         }
         Insert: {
           category?: string
@@ -38,6 +39,7 @@ export type Database = {
           price: number
           updated_at?: string
           vendor?: string
+          vendor_whatsapp?: string
         }
         Update: {
           category?: string
@@ -50,6 +52,7 @@ export type Database = {
           price?: number
           updated_at?: string
           vendor?: string
+          vendor_whatsapp?: string
         }
         Relationships: []
       }
