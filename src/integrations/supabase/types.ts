@@ -59,6 +59,8 @@ export type Database = {
           business_name: string
           created_at: string
           cta_color: string
+          hero_description: string
+          hero_tagline: string
           id: string
           logo_url: string | null
           order_format: string
@@ -70,6 +72,8 @@ export type Database = {
           business_name?: string
           created_at?: string
           cta_color?: string
+          hero_description?: string
+          hero_tagline?: string
           id?: string
           logo_url?: string | null
           order_format?: string
@@ -81,6 +85,8 @@ export type Database = {
           business_name?: string
           created_at?: string
           cta_color?: string
+          hero_description?: string
+          hero_tagline?: string
           id?: string
           logo_url?: string | null
           order_format?: string

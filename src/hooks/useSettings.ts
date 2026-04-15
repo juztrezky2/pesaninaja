@@ -9,6 +9,8 @@ export type SiteSettings = {
   background_image_url: string | null;
   cta_color: string;
   order_format: string;
+  hero_tagline: string;
+  hero_description: string;
 };
 
 export function useSettings() {

@@ -17,7 +17,7 @@ export function AdminProfile() {
   useEffect(() => {
     if (settings) {
       setBusinessName(settings.business_name);
-      setWaNumber(settings.whatsapp_number);
+      setWaNumber(settings.whatsapp_number.replace(/^\+/, ""));
     }
   }, [settings]);
 
@@ -68,10 +68,10 @@ export function AdminProfile() {
         <input
           value={waNumber}
           onChange={(e) => setWaNumber(e.target.value)}
-          placeholder="+6281234567890"
+          placeholder="6281234567890"
           className="w-full px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
-        <p className="text-xs text-muted-foreground mt-1">Format Indonesia: +62...</p>
+        <p className="text-xs text-muted-foreground mt-1">Format Indonesia tanpa +: 62...</p>
       </div>
       <div>
         <label className="text-sm font-medium mb-1 block">Logo</label>
