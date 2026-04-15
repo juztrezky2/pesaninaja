@@ -8,6 +8,21 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
+function isMobile(): boolean {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    navigator.userAgent
+  );
+}
+
+function makeWaLink(phone: string, text: string): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, "");
+  const encoded = encodeURIComponent(text);
+  if (isMobile()) {
+    return `https://wa.me/${cleanPhone}?text=${encoded}`;
+  }
+  return `https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`;
+}
+
 export function buildWhatsAppUrl(
   phone: string,
   items: CartItem[],
@@ -34,8 +49,7 @@ export function buildWhatsAppUrl(
     text = `Halo, saya ingin pesan:\n\n${itemsText}\n\nTotal: ${formatPrice(total)}\n\nNama: ${nama || "[belum diisi]"}\nAlamat: ${alamat || "[belum diisi]"}\n\nTerima kasih!`;
   }
 
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
+  return makeWaLink(phone, text);
 }
 
 export function buildSingleItemWAUrl(
@@ -44,6 +58,5 @@ export function buildSingleItemWAUrl(
   price: number
 ) {
   const text = `Halo, saya ingin pesan:\n\n- ${productName} x 1 @ ${formatPrice(price)}\n\nTotal: ${formatPrice(price)}\n\nTerima kasih!`;
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
+  return makeWaLink(phone, text);
 }
