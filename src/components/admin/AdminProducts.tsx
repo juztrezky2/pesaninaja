@@ -95,7 +95,7 @@ export function AdminProducts() {
 
     const rows = lines.slice(1).map((line) => {
       const cols = line.split(",").map((c) => c.trim().replace(/^"|"$/g, ""));
-      return { name: cols[0], price: parseInt(cols[1]) || 0, description: cols[2] || null, category: cols[3] || "Makanan", vendor: cols[4] || "" };
+      return { name: cols[0], price: parseInt(cols[1]) || 0, description: cols[2] || null, category: cols[3] || "Makanan", vendor: cols[4] || "", vendor_whatsapp: cols[5] || "" };
     }).filter((r) => r.name);
 
     const { error } = await supabase.from("products").insert(rows);
@@ -108,8 +108,8 @@ export function AdminProducts() {
 
   const handleExportCSV = () => {
     if (!products) return;
-    const header = "nama,harga,deskripsi,kategori,vendor";
-    const rows = products.map((p) => `"${p.name}",${p.price},"${p.description || ""}","${p.category}","${p.vendor}"`);
+    const header = "nama,harga,deskripsi,kategori,vendor,wa_vendor";
+    const rows = products.map((p) => `"${p.name}",${p.price},"${p.description || ""}","${p.category}","${p.vendor}","${(p as any).vendor_whatsapp || ""}"`);
     const csv = [header, ...rows].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
