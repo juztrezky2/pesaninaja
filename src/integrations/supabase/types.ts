@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          name: string
+          price: number
+          updated_at: string
+          vendor: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name: string
+          price: number
+          updated_at?: string
+          vendor?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name?: string
+          price?: number
+          updated_at?: string
+          vendor?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          background_image_url: string | null
+          business_name: string
+          created_at: string
+          cta_color: string
+          id: string
+          logo_url: string | null
+          order_format: string
+          updated_at: string
+          whatsapp_number: string
+        }
+        Insert: {
+          background_image_url?: string | null
+          business_name?: string
+          created_at?: string
+          cta_color?: string
+          id?: string
+          logo_url?: string | null
+          order_format?: string
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Update: {
+          background_image_url?: string | null
+          business_name?: string
+          created_at?: string
+          cta_color?: string
+          id?: string
+          logo_url?: string | null
+          order_format?: string
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
