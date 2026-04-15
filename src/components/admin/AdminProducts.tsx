@@ -13,7 +13,7 @@ export function AdminProducts() {
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", price: "", description: "", category: "Makanan", vendor: "", imageFile: null as File | null });
+  const [form, setForm] = useState({ name: "", price: "", description: "", category: "Makanan", vendor: "", vendorWa: "", imageFile: null as File | null });
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["admin-products"],
@@ -25,7 +25,7 @@ export function AdminProducts() {
   });
 
   const resetForm = () => {
-    setForm({ name: "", price: "", description: "", category: "Makanan", vendor: "", imageFile: null });
+    setForm({ name: "", price: "", description: "", category: "Makanan", vendor: "", vendorWa: "", imageFile: null });
     setEditingId(null);
     setShowForm(false);
   };
@@ -53,6 +53,7 @@ export function AdminProducts() {
       description: form.description || null,
       category: form.category,
       vendor: form.vendor,
+      vendor_whatsapp: form.vendorWa,
       ...(imageUrl ? { image_url: imageUrl } : {}),
     };
 
@@ -80,7 +81,7 @@ export function AdminProducts() {
   };
 
   const handleEdit = (p: Product) => {
-    setForm({ name: p.name, price: String(p.price), description: p.description || "", category: p.category, vendor: p.vendor, imageFile: null });
+    setForm({ name: p.name, price: String(p.price), description: p.description || "", category: p.category, vendor: p.vendor, vendorWa: (p as any).vendor_whatsapp || "", imageFile: null });
     setEditingId(p.id);
     setShowForm(true);
   };
@@ -145,6 +146,7 @@ export function AdminProducts() {
               {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
             </select>
             <input placeholder="Nama Vendor/Penjual" value={form.vendor} onChange={(e) => setForm({ ...form, vendor: e.target.value })} className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            <input placeholder="No WA Vendor (cth: 6281234567890)" value={form.vendorWa} onChange={(e) => setForm({ ...form, vendorWa: e.target.value })} className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
             <input type="file" accept="image/*" onChange={(e) => setForm({ ...form, imageFile: e.target.files?.[0] || null })} className="text-sm" />
           </div>
           <div className="flex gap-2">
@@ -168,6 +170,7 @@ export function AdminProducts() {
                 <th className="py-2 pr-2">Harga</th>
                 <th className="py-2 pr-2 hidden sm:table-cell">Kategori</th>
                 <th className="py-2 pr-2 hidden sm:table-cell">Vendor</th>
+                <th className="py-2 pr-2 hidden md:table-cell">WA Vendor</th>
                 <th className="py-2">Aksi</th>
               </tr>
             </thead>
@@ -183,6 +186,7 @@ export function AdminProducts() {
                   <td className="py-2 pr-2">{formatPrice(p.price)}</td>
                   <td className="py-2 pr-2 hidden sm:table-cell">{p.category}</td>
                   <td className="py-2 pr-2 hidden sm:table-cell">{p.vendor}</td>
+                  <td className="py-2 pr-2 hidden md:table-cell text-xs text-muted-foreground">{(p as any).vendor_whatsapp || '-'}</td>
                   <td className="py-2">
                     <div className="flex gap-1">
                       <button onClick={() => handleEdit(p as Product)} className="p-1.5 rounded hover:bg-accent"><Pencil className="h-3.5 w-3.5" /></button>
