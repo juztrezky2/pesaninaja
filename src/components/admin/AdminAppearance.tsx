@@ -12,12 +12,16 @@ export function AdminAppearance() {
   const [ctaColor, setCtaColor] = useState("#25D366");
   const [bgFile, setBgFile] = useState<File | null>(null);
   const [orderFormat, setOrderFormat] = useState("");
+  const [heroTagline, setHeroTagline] = useState("");
+  const [heroDescription, setHeroDescription] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (settings) {
       setCtaColor(settings.cta_color);
       setOrderFormat(settings.order_format);
+      setHeroTagline(settings.hero_tagline);
+      setHeroDescription(settings.hero_description);
     }
   }, [settings]);
 
@@ -38,7 +42,13 @@ export function AdminAppearance() {
 
     const { error } = await supabase
       .from("site_settings")
-      .update({ cta_color: ctaColor, background_image_url: bgUrl, order_format: orderFormat })
+      .update({
+        cta_color: ctaColor,
+        background_image_url: bgUrl,
+        order_format: orderFormat,
+        hero_tagline: heroTagline,
+        hero_description: heroDescription,
+      })
       .eq("id", settings.id);
 
     setSaving(false);
@@ -54,6 +64,25 @@ export function AdminAppearance() {
 
   return (
     <div className="max-w-lg space-y-4">
+      <div>
+        <label className="text-sm font-medium mb-1 block">Tagline Hero</label>
+        <input
+          value={heroTagline}
+          onChange={(e) => setHeroTagline(e.target.value)}
+          className="w-full px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          placeholder="Pesan Makanan & Minuman Mudah via WhatsApp"
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium mb-1 block">Deskripsi Hero</label>
+        <textarea
+          value={heroDescription}
+          onChange={(e) => setHeroDescription(e.target.value)}
+          rows={2}
+          className="w-full px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          placeholder="Platform digital untuk UMKM kuliner Soppeng..."
+        />
+      </div>
       <div>
         <label className="text-sm font-medium mb-1 block">Background Image</label>
         {settings?.background_image_url && (
