@@ -50,7 +50,12 @@ const Index = () => {
       }
     >
       <Header totalItems={cart.totalItems} onCartClick={() => setCartOpen(true)} />
-      <Hero onClickMenu={scrollToMenu} />
+      <Hero
+        onClickMenu={scrollToMenu}
+        tagline={settings?.hero_tagline}
+        description={settings?.hero_description}
+        backgroundUrl={settings?.background_image_url}
+      />
 
       <main className="flex-1 container px-4 py-6" ref={menuRef}>
         <div className="flex items-center justify-between mb-4">
