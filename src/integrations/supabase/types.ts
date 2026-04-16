@@ -58,10 +58,10 @@ export type Database = {
       }
       site_settings: {
         Row: {
-          background_image_url: string | null
           business_name: string
           created_at: string
           cta_color: string
+          hero_background_image_url: string | null
           hero_description: string
           hero_tagline: string
           id: string
@@ -71,10 +71,10 @@ export type Database = {
           whatsapp_number: string
         }
         Insert: {
-          background_image_url?: string | null
           business_name?: string
           created_at?: string
           cta_color?: string
+          hero_background_image_url?: string | null
           hero_description?: string
           hero_tagline?: string
           id?: string
@@ -84,10 +84,10 @@ export type Database = {
           whatsapp_number?: string
         }
         Update: {
-          background_image_url?: string | null
           business_name?: string
           created_at?: string
           cta_color?: string
+          hero_background_image_url?: string | null
           hero_description?: string
           hero_tagline?: string
           id?: string

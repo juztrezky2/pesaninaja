@@ -6,7 +6,7 @@ export type SiteSettings = {
   business_name: string;
   whatsapp_number: string;
   logo_url: string | null;
-  background_image_url: string | null;
+  hero_background_image_url: string | null;
   cta_color: string;
   order_format: string;
   hero_tagline: string;
