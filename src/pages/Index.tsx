@@ -120,6 +120,7 @@ const Index = () => {
                 onImageClick={setSelectedImage}
                 waNumber={settings?.whatsapp_number || "+6281234567890"}
                 ctaColor={settings?.cta_color}
+                orderFormat={settings?.order_format}
               />
             ))}
           </div>

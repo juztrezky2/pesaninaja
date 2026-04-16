@@ -1,4 +1,5 @@
 import type { CartItem } from "@/hooks/useCart";
+import type { Product } from "@/hooks/useProducts";
 
 export function formatPrice(price: number): string {
   return new Intl.NumberFormat("id-ID", {
@@ -51,11 +52,33 @@ export function buildWhatsAppUrl(
   return makeWaLink(phone, text);
 }
 
+export function buildSingleItemOrderText(
+  product: Product,
+  nama: string,
+  alamat: string,
+  orderFormat?: string
+): string {
+  const itemsText = `- ${product.name} (${product.vendor}) x 1 @ ${formatPrice(product.price)}`;
+  const total = product.price;
+
+  if (orderFormat) {
+    return orderFormat
+      .replace("{items}", itemsText)
+      .replace("{total}", formatPrice(total))
+      .replace("{nama}", nama || "[belum diisi]")
+      .replace("{alamat}", alamat || "[belum diisi]");
+  }
+
+  return `Halo, saya ingin pesan:\n\n${itemsText}\n\nTotal: ${formatPrice(total)}\n\nNama: ${nama || "[belum diisi]"}\nAlamat: ${alamat || "[belum diisi]"}\n\nTerima kasih!`;
+}
+
 export function buildSingleItemWAUrl(
   phone: string,
-  productName: string,
-  price: number
+  product: Product,
+  nama: string,
+  alamat: string,
+  orderFormat?: string
 ) {
-  const text = `Halo, saya ingin pesan:\n\n- ${productName} x 1 @ ${formatPrice(price)}\n\nTotal: ${formatPrice(price)}\n\nTerima kasih!`;
+  const text = buildSingleItemOrderText(product, nama, alamat, orderFormat);
   return makeWaLink(phone, text);
 }
