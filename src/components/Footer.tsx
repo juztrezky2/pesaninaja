@@ -14,10 +14,10 @@ export function Footer() {
             <Settings className="h-5 w-5" />
           </Link>
           <div className="text-right">
-            <p className="text-xs text-muted-foreground">
-              © 2026 Platform Digital UMKM Soppeng
+            <p className="text-xs text-muted-foreground text-left">
+              © 2026 Platform Digital UMKM Soppeng by juztrezky
             </p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-muted-foreground mt-1 text-center">
               Pesan mudah via WhatsApp
             </p>
           </div>
