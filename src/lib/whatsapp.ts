@@ -34,7 +34,7 @@ export function buildWhatsAppUrl(
   const itemsText = items
     .map(
       (i) =>
-        `- ${i.product.name} x ${i.quantity} @ ${formatPrice(i.product.price)}`
+        `- ${i.product.name} (${i.product.vendor}) x ${i.quantity} @ ${formatPrice(i.product.price)}`
     )
     .join("\n");
 
