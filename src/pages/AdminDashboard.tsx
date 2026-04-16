@@ -20,6 +20,18 @@ const AdminDashboard = () => {
         navigate("/admin");
         return;
       }
+      // Verify admin role
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', data.session.user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+      if (!roleData) {
+        await supabase.auth.signOut();
+        navigate("/admin");
+        return;
+      }
       setLoading(false);
     };
 
