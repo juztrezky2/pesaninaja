@@ -113,7 +113,7 @@ export function AdminAppearance() {
           className="w-full px-3 py-2 rounded-lg border bg-background text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
         <p className="text-xs text-muted-foreground mt-1">
-          Gunakan placeholder: {"{items}"}, {"{total}"}, {"{nama}"}, {"{alamat}"}
+          Gunakan placeholder: {"{items}"}, {"{total}"}, {"{nama}"}, {"{alamat}"}, {"{vendor}"}
         </p>
       </div>
       <button
