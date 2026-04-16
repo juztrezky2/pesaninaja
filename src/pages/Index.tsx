@@ -44,8 +44,8 @@ const Index = () => {
     <div
       className="min-h-screen flex flex-col"
       style={
-        settings?.background_image_url
-          ? { backgroundImage: `url(${settings.background_image_url})`, backgroundSize: "cover", backgroundAttachment: "fixed" }
+        settings?.hero_background_image_url
+          ? { backgroundImage: `url(${settings.hero_background_image_url})`, backgroundSize: "cover", backgroundAttachment: "fixed" }
           : undefined
       }
     >
@@ -54,7 +54,7 @@ const Index = () => {
         onClickMenu={scrollToMenu}
         tagline={settings?.hero_tagline}
         description={settings?.hero_description}
-        backgroundUrl={settings?.background_image_url}
+        backgroundUrl={settings?.hero_background_image_url}
       />
 
       <main className="flex-1 container px-4 py-6" ref={menuRef}>
