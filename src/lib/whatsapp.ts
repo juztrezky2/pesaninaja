@@ -8,19 +8,10 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
-function isMobile(): boolean {
-  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
-    navigator.userAgent
-  );
-}
-
 function makeWaLink(phone: string, text: string): string {
   const cleanPhone = phone.replace(/[^0-9]/g, "");
   const encoded = encodeURIComponent(text);
-  if (isMobile()) {
-    return `https://wa.me/${cleanPhone}?text=${encoded}`;
-  }
-  return `https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`;
+  return `https://wa.me/${cleanPhone}?text=${encoded}`;
 }
 
 export function buildWhatsAppUrl(
