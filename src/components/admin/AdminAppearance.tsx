@@ -10,7 +10,7 @@ export function AdminAppearance() {
   const queryClient = useQueryClient();
 
   const [ctaColor, setCtaColor] = useState("#25D366");
-  const [bgFile, setBgFile] = useState<File | null>(null);
+  const [heroBgFile, setHeroBgFile] = useState<File | null>(null);
   const [orderFormat, setOrderFormat] = useState("");
   const [heroTagline, setHeroTagline] = useState("");
   const [heroDescription, setHeroDescription] = useState("");
@@ -29,14 +29,14 @@ export function AdminAppearance() {
     if (!settings) return;
     setSaving(true);
 
-    let bgUrl = settings.background_image_url;
-    if (bgFile) {
-      const ext = bgFile.name.split(".").pop();
-      const path = `bg/background.${ext}`;
-      const { error: upErr } = await supabase.storage.from("images").upload(path, bgFile, { upsert: true });
+    let heroBgUrl = settings.hero_background_image_url;
+    if (heroBgFile) {
+      const ext = heroBgFile.name.split(".").pop();
+      const path = `bg/hero-background.${ext}`;
+      const { error: upErr } = await supabase.storage.from("images").upload(path, heroBgFile, { upsert: true });
       if (!upErr) {
         const { data } = supabase.storage.from("images").getPublicUrl(path);
-        bgUrl = data.publicUrl;
+        heroBgUrl = data.publicUrl;
       }
     }
 
@@ -44,7 +44,7 @@ export function AdminAppearance() {
       .from("site_settings")
       .update({
         cta_color: ctaColor,
-        background_image_url: bgUrl,
+        hero_background_image_url: heroBgUrl,
         order_format: orderFormat,
         hero_tagline: heroTagline,
         hero_description: heroDescription,
@@ -84,11 +84,11 @@ export function AdminAppearance() {
         />
       </div>
       <div>
-        <label className="text-sm font-medium mb-1 block">Background Image</label>
-        {settings?.background_image_url && (
-          <img src={settings.background_image_url} alt="BG" className="h-24 rounded-lg mb-2 object-cover" />
+        <label className="text-sm font-medium mb-1 block">Background Image Hero</label>
+        {settings?.hero_background_image_url && (
+          <img src={settings.hero_background_image_url} alt="Hero BG" className="h-24 rounded-lg mb-2 object-cover" />
         )}
-        <input type="file" accept="image/*" onChange={(e) => setBgFile(e.target.files?.[0] || null)} className="text-sm" />
+        <input type="file" accept="image/*" onChange={(e) => setHeroBgFile(e.target.files?.[0] || null)} className="text-sm" />
       </div>
       <div>
         <label className="text-sm font-medium mb-1 block">Warna Tombol CTA</label>
