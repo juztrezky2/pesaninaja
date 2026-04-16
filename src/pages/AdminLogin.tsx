@@ -14,13 +14,26 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
     if (authError) {
       setError(authError.message);
       setLoading(false);
-    } else {
-      navigate("/admin/dashboard");
+      return;
     }
+    // Verify admin role
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', authData.user.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+    if (!roleData) {
+      await supabase.auth.signOut();
+      setError("Akun ini tidak memiliki akses admin.");
+      setLoading(false);
+      return;
+    }
+    navigate("/admin/dashboard");
   };
 
   return (
