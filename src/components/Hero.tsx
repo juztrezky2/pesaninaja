@@ -19,7 +19,7 @@ export function Hero({ onClickMenu, tagline, description, backgroundUrl }: HeroP
           {tagline || "Pesan Makanan & Minuman Mudah via WhatsApp"}
         </h2>
         <p className="text-primary-foreground/80 text-sm md:text-base mb-6 max-w-md mx-auto">
-          {description || "Platform digital untuk UMKM kuliner Soppeng. Pesan langsung, bayar mudah!"}
+          {description || "Platform digital untuk UMKM kuliner Soppeng by juztrezky.  Pesan langsung, bayar mudah!"}
         </p>
         <button
           onClick={onClickMenu}
