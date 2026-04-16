@@ -1,7 +1,17 @@
 import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { CartItem } from "@/hooks/useCart";
-import { formatPrice, buildWhatsAppUrl } from "@/lib/whatsapp";
+import { formatPrice, buildWhatsAppUrl, buildOrderText } from "@/lib/whatsapp";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 
 type CartDrawerProps = {
   open: boolean;
@@ -30,6 +40,7 @@ export function CartDrawer({
 }: CartDrawerProps) {
   const [nama, setNama] = useState("");
   const [alamat, setAlamat] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   if (!open) return null;
 
@@ -38,9 +49,16 @@ export function CartDrawer({
       alert("Mohon isi nama dan alamat terlebih dahulu.");
       return;
     }
+    setShowConfirm(true);
+  };
+
+  const handleConfirmSend = () => {
     const url = buildWhatsAppUrl(waNumber, items, totalPrice, nama, alamat, orderFormat);
     window.open(url, "_blank");
+    setShowConfirm(false);
   };
+
+  const previewText = buildOrderText(items, totalPrice, nama, alamat, orderFormat);
 
   return (
     <div className="fixed inset-0 z-[55]">
@@ -134,6 +152,32 @@ export function CartDrawer({
           </>
         )}
       </div>
+
+      <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
+        <AlertDialogContent className="max-w-md z-[60]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Pesanan</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Berikut pesan yang akan dikirim ke WhatsApp:</p>
+                <pre className="whitespace-pre-wrap text-xs bg-secondary/50 rounded-lg p-3 max-h-60 overflow-y-auto font-sans text-foreground">
+                  {previewText}
+                </pre>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmSend}
+              className="text-primary-foreground"
+              style={{ backgroundColor: ctaColor || "hsl(142, 70%, 49%)" }}
+            >
+              Kirim ke WhatsApp
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

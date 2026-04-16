@@ -14,6 +14,31 @@ function makeWaLink(phone: string, text: string): string {
   return `https://wa.me/${cleanPhone}?text=${encoded}`;
 }
 
+export function buildOrderText(
+  items: CartItem[],
+  total: number,
+  nama: string,
+  alamat: string,
+  orderFormat?: string
+): string {
+  const itemsText = items
+    .map(
+      (i) =>
+        `- ${i.product.name} (${i.product.vendor}) x ${i.quantity} @ ${formatPrice(i.product.price)}`
+    )
+    .join("\n");
+
+  if (orderFormat) {
+    return orderFormat
+      .replace("{items}", itemsText)
+      .replace("{total}", formatPrice(total))
+      .replace("{nama}", nama || "[belum diisi]")
+      .replace("{alamat}", alamat || "[belum diisi]");
+  }
+
+  return `Halo, saya ingin pesan:\n\n${itemsText}\n\nTotal: ${formatPrice(total)}\n\nNama: ${nama || "[belum diisi]"}\nAlamat: ${alamat || "[belum diisi]"}\n\nTerima kasih!`;
+}
+
 export function buildWhatsAppUrl(
   phone: string,
   items: CartItem[],
@@ -22,24 +47,7 @@ export function buildWhatsAppUrl(
   alamat: string,
   orderFormat?: string
 ) {
-  const itemsText = items
-    .map(
-      (i) =>
-        `- ${i.product.name} (${i.product.vendor}) x ${i.quantity} @ ${formatPrice(i.product.price)}`
-    )
-    .join("\n");
-
-  let text: string;
-  if (orderFormat) {
-    text = orderFormat
-      .replace("{items}", itemsText)
-      .replace("{total}", formatPrice(total))
-      .replace("{nama}", nama || "[belum diisi]")
-      .replace("{alamat}", alamat || "[belum diisi]");
-  } else {
-    text = `Halo, saya ingin pesan:\n\n${itemsText}\n\nTotal: ${formatPrice(total)}\n\nNama: ${nama || "[belum diisi]"}\nAlamat: ${alamat || "[belum diisi]"}\n\nTerima kasih!`;
-  }
-
+  const text = buildOrderText(items, total, nama, alamat, orderFormat);
   return makeWaLink(phone, text);
 }
 
